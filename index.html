@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Gyroscope Data</title>
-  </head>
-  <body>
-    <p>Gyroscope Data:</p>
-    <div id="gyro-data"></div>
+<head>
+	<title>My Gyroscope Website</title>
+</head>
+<body>
+	<!-- Your HTML content here -->
 
-    <script>
-      if (window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientation', function(eventData) {
-          var gyroData = {
-            alpha: eventData.alpha,
-            beta: eventData.beta,
-            gamma: eventData.gamma
-          };
+	<script>
+		function sendGyroData(gyroData) {
+			console.log(`Sending gyro data: alpha=${gyroData.alpha}, beta=${gyroData.beta}, gamma=${gyroData.gamma}`);
+			
+			// Send the gyroData to your Roblox game using a RemoteEvent.
+			// You will need to create a RemoteEvent in your game to receive the data.
+			const remoteEvent = new Roblox.Event("GyroRemoteEvent");
+			remoteEvent.FireServer(gyroData);
+		}
 
-          document.getElementById('gyro-data').innerHTML = JSON.stringify(gyroData);
-          
-          // Send the gyroData to your server using an HTTP request.
-          // You will need to write server-side code to handle the data.
-        });
-      } else {
-        document.getElementById('gyro-data').innerHTML = "Gyroscope not supported on this device";
-      }
-    </script>
-  </body>
+		window.addEventListener("deviceorientation", function(event) {
+			const gyroData = {
+				alpha: event.alpha,
+				beta: event.beta,
+				gamma: event.gamma
+			};
+			
+			sendGyroData(gyroData);
+		});
+	</script>
+</body>
 </html>
