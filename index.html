@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gyroscope Data</title>
+  </head>
+  <body>
+    <p>Gyroscope Data:</p>
+    <div id="gyro-data"></div>
+
+    <script>
+      if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', function(eventData) {
+          var gyroData = {
+            alpha: eventData.alpha,
+            beta: eventData.beta,
+            gamma: eventData.gamma
+          };
+
+          document.getElementById('gyro-data').innerHTML = JSON.stringify(gyroData);
+          
+          // Send the gyroData to your server using an HTTP request.
+          // You will need to write server-side code to handle the data.
+        });
+      } else {
+        document.getElementById('gyro-data').innerHTML = "Gyroscope not supported on this device";
+      }
+    </script>
+  </body>
+</html>
