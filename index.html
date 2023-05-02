@@ -4,7 +4,7 @@
 	<title>My Gyroscope Website</title>
 </head>
 <body>
-	<!-- Your HTML content here -->
+	<p id="gyro-data"></p>
 
 	<script>
 		function sendGyroData(gyroData) {
@@ -14,6 +14,10 @@
 			// You will need to create a RemoteEvent in your game to receive the data.
 			const remoteEvent = new Roblox.Event("GyroRemoteEvent");
 			remoteEvent.FireServer(gyroData);
+
+			// Update the <p> element with the gyro data.
+			const gyroDataElement = document.getElementById("gyro-data");
+			gyroDataElement.innerHTML = `Gyro data: alpha=${gyroData.alpha}, beta=${gyroData.beta}, gamma=${gyroData.gamma}`;
 		}
 
 		window.addEventListener("deviceorientation", function(event) {
