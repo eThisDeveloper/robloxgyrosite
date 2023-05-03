@@ -1,34 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>My Gyroscope Website</title>
-</head>
-<body>
-	<p id="gyro-data"></p>
-
-	<script>
-		function sendGyroData(gyroData) {
-			console.log(`Sending gyro data: alpha=${gyroData.alpha}, beta=${gyroData.beta}, gamma=${gyroData.gamma}`);
-			
-			// Send the gyroData to your Roblox game using a RemoteEvent.
-			// You will need to create a RemoteEvent in your game to receive the data.
-			const remoteEvent = new Roblox.Event("GyroRemoteEvent");
-			remoteEvent.FireServer(gyroData);
-
-			// Update the <p> element with the gyro data.
-			const gyroDataElement = document.getElementById("gyro-data");
-			gyroDataElement.innerHTML = `Gyro data: alpha=${gyroData.alpha}, beta=${gyroData.beta}, gamma=${gyroData.gamma}`;
-		}
-
-		window.addEventListener("deviceorientation", function(event) {
-			const gyroData = {
-				alpha: event.alpha,
-				beta: event.beta,
-				gamma: event.gamma
-			};
-			
-			sendGyroData(gyroData);
-		});
-	</script>
-</body>
+  <head>
+    <title>Gyroscope Data</title>
+  </head>
+  <body>
+    <h1>Gyroscope Data</h1>
+    <p>X: <span id="x-value"></span></p>
+    <p>Y: <span id="y-value"></span></p>
+    <p>Z: <span id="z-value"></span></p>
+    <script>
+      if (window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', function(eventData) {
+          // Retrieve the gyroscope data from the event
+          var x = eventData.gamma;
+          var y = eventData.beta;
+          var z = eventData.alpha;
+          // Update the HTML content with the gyroscope data
+          document.getElementById("x-value").innerHTML = x;
+          document.getElementById("y-value").innerHTML = y;
+          document.getElementById("z-value").innerHTML = z;
+        }, false);
+      } else {
+        alert("Device orientation not supported.");
+      }
+    </script>
+  </body>
 </html>
